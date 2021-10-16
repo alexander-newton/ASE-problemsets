@@ -1,0 +1,87 @@
+---
+title: "Problem Set 3"
+author: "Alexander Newton"
+date: "12/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+```
+
+## Q5
+
+You have to be kidding me about these data formats!
+
+### a)
+
+```{r}
+# as tidy data:
+
+goods_price_quantity <- tibble::tibble(year=c(0,0,1,1),
+               good=c("A","B","A","B"),
+               pit=c(20,10,10,20),
+               qit=c(10,20,20,10),
+)
+
+goods_price_quantity %>% dplyr::group_by(year) %>% dplyr::summarise(expenditure = sum(pit*qit))
+
+```
+
+### b)
+
+If instead the quantities for both years were the quantities for year 0:
+
+```{r}
+year0_quantities <- goods_price_quantity
+year0_quantities[3:4,c("qit")] <- year0_quantities[1:2,c("qit")]
+year0_quantities %>% dplyr::group_by(year) %>% dplyr::summarise(expenditure = sum(pit*qit))
+```
+
+and as if the quantities were those for year 1:
+```{r}
+year1_quantities <- goods_price_quantity
+year1_quantities[1:2,c("qit")] <- year1_quantities[3:4,c("qit")]
+year1_quantities %>% dplyr::group_by(year) %>% dplyr::summarise(expenditure = sum(pit*qit))
+
+```
+
+### c)
+
+calculating inflation for both of the above:
+
+```{r}
+df_list <- list("year_0_quantities" = year0_quantities, "year_1_quantities" = year1_quantities)
+
+calculate_inflation <- function(df){
+  df %>% dplyr::group_by(year) %>% dplyr::summarise(expenditure = sum(pit*qit)) %>% dplyr::mutate(inflation = expenditure / dplyr::lag(expenditure))
+}
+
+lapply(X = df_list, FUN = calculate_inflation)
+```
+
+### d)
+
+In the first case inflation was positive, in the second negative. This shows how important it is to have a consistent definition of inflation. The values of inflation were also the inverse of each other: $\dfrac{5}{4}$ against $\dfrac{4}{5}$.
+
+### e)
+
+In the following:
+
+$$
+\dfrac{
+\sum_i P_{i1} Q_{i1}
+}{
+\sum_i P_{i0} Q_{i0}
+} = 
+\dfrac{\sum_i P_{i1} Q_{i0}}{\sum_i P_{i0}Q_{i0}} \times \dfrac{\sum_i P_{i0} Q_{i1}}{\sum_i{P_{i0} Q_{i0}}}
+$$
+
+the left term is the expenditure inflation as it is the total expenditure in the second year over the total expenditure in the first. The first term on the right is the price inflation as it is the proportional change in price for a constant quantity, and the second term on the right is the quantity inflation as it is the versa.
+
+The relationship between them is saying that expenditure inflation is the product of quantity inflation and price inflation, in much the same way that expenditure is the product of price and quantity.
+
+## Q6
+
+
