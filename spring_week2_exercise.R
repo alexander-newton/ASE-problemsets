@@ -7,7 +7,7 @@ plot(le_data$PCGDP, le_data$LE)
 ##### MAKE LOG-LEVEL MODEL
 le_data_ll <- le_data
 le_data_ll$PCGDP <- log(le_data$PCGDP)
-linear_model <- glm(PCGDP ~ ., data = le_data_ll[c("PCGDP","LE")])
+linear_model <- glm(LE ~ ., data = le_data_ll[c("PCGDP","LE")])
 
 ##### SUMMARISE MODELA AND PLOT RESIDUALS
 summary(linear_model)$coefficients
