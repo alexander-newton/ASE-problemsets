@@ -182,7 +182,7 @@ Net domestic product (NDP) is similar to GDP but accounts for the depreciation a
 GDP can be poor for a number of reasons:
 - it does not include an understanding of the existing capital within a country, nor non-fiscal types of capital e.g. natural capital, social capital.
   - this means that GDP goes up from the rebuilding after a natural disaster, but does not go down from the destruction caused,
-  - likewise, defensive expenditure (e.g. guards for crime, traffic barriers for roads) increase GDP
+- defensive expenditure and waste (e.g. guards for crime, traffic barriers for roads) increase GDP
 - it is difficult to include the value of informal or unrecorded economic activity
 - it is difficult to account for repatriation of profits across multinational firms
 - it does include overall well-being
